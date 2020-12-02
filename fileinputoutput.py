@@ -18,9 +18,17 @@ my_file.close() # you must close the file!
 
 # r+ means read and write, a is append, w is write. w will write over.
 # write will create a new file if it does not exist.
-with open('sad.txt', mode='w') as my_file:
-    text = my_file.write(':(')
-    print(text)
 
+try:
+    with open('sad.txt', mode='w') as my_file:
+        print('write something and press enter twice')
+        text = my_file.write(input())
+        print(f'{text} characters were added to {my_file}')
+except FileNotFoundError as err:
+    print('file does not exist')
+    raise err
+except IOError as err:
+    print('IO error')
+    raise err
 
 # python fileinputoutput.py
