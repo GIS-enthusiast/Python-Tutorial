@@ -1,3 +1,4 @@
+from time import time
 import math
 NUM_ROWS = 128
 NUM_COLUMNS = 8
@@ -16,7 +17,7 @@ def get_seat_info(boarding_number):
     column_info = boarding_number[-3:]
     valid_row_range = range(0, 128)
     valid_column_range = range(0, 8)
-    row, column = -1, -1
+
     # ROW
     for i, sector in enumerate(row_info):
         valid_row_range = bsp(row_info[i], valid_row_range)
@@ -56,7 +57,13 @@ def part_two(data):
     return find_seat(data)
 
 
+t1 = time()
 with open("./day5.txt") as f:
-    data = [x.strip() for x in f.readlines()]
+    data = [x.strip() for x in f]
     print(f"Part One: {part_one(data)}")
+    t2 = time()
     print(f"Part Two: {part_two(data)}")
+    t3 = time()
+
+print(t2-t1)
+print(t3-t2)
