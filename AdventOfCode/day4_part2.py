@@ -1,4 +1,4 @@
-# This answer was influenced by an answer I liked on Github. Much better.
+# This answer came from an answer I liked on Github (cs1201/AOC_2020). Much better than my first attempt (see part 1).
 # Example of a passport object(string): ecl:gry byr:1973 iyr:2011 pid:479606625 eyr:2028 hcl:#888785 cid:108 hgt:160cm
 
 import re
@@ -13,7 +13,8 @@ def parse_passport(passport):
     # Convert passport to dict
     passport_dict = dict()
     for item in re.split(' |\n', passport):
-        passport_dict[item.split(':')[0]] = item.split(':')[1]
+        passport_dict[item.split(':')[0]] = item.split(
+            ':')[1]  # appending to dict in form d[k]=v
 
     # Validate specific elements
     if validate_passport(passport):
@@ -21,7 +22,7 @@ def parse_passport(passport):
                       int(passport_dict['iyr']) not in range(2010, 2021),
                       int(passport_dict['eyr']) not in range(2020, 2031),
                       passport_dict['hcl'][0] != "#" or len(
-            passport_dict['hcl']) != 7 or not passport_dict['hcl'][1:].isalnum(),
+            passport_dict['hcl']) != 7 or not passport_dict['hcl'][1:].isalnum(),  # is alfanumneric, string function
             passport_dict['ecl'] not in [
             'amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'],
             len(passport_dict['pid']) != 9,
@@ -48,11 +49,23 @@ def part_two(data):
 
 with open(passport_file, 'r') as f:
     data = [(x.strip()) for x in f.read().split("\n\n")]
-    for passport in data:
-        print(passport)
-        print(type(passport))
-        print(len(passport))
-        break
-
     print(f"Part One: {part_one(data)}")
     print(f"Part Two: {part_two(data)}")
+
+# ecl:gry byr:1973 iyr:2011 pid:479606625 eyr:2028 hcl:#888785 cid:108 hgt:160cm
+
+
+# Below is a revised condition list under construction.
+'''
+        conditions = [int(passport_dict['byr']) not in range(1920, 2002),
+                      int(passport_dict['iyr']) not in range(2010, 2020),
+                      int(passport_dict['eyr']) not in range(2020, 2030),
+                      passport_dict['hcl'][0] != '#' or len(
+            passport_dict['hcl']) != 7 or not passport_dict['hcl'][1:].isalnum(),
+            not isinstance(passport_dict['pid'], (int, float, complex)),
+            passport_dict['ecl'] not in 'amb blu brn gry grn hzl oth',
+            len(passport_dict['pid']) != 9,
+            passport_dict['hgt'][-2:] == 'cm' and int(
+                passport_dict['hgt'][:-2]) not in range(150, 193),
+            passport_dict['hgt'][-2:] == 'in' and int(passport_dict['hgt'][:-2]) not in range(59, 76)]
+'''
